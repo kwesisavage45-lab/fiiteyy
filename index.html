@@ -1471,7 +1471,7 @@ window.checkout=function(){
     message+=`   • Category: ${item.cat}\n`;
     message+=`   • Price: ${price>0?`GH₵ ${price.toLocaleString()}`:'--'}\n`;
     if(item.images&&item.images[0]){
-      message+=`   • Photo: ${item.images[0]}\n`;
+      message+=`   • Photo:\n${item.images[0]}\n`;
     }
     message+='\n';
   });
