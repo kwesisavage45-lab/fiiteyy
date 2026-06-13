@@ -401,6 +401,49 @@ footer::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;he
 [data-theme="dark"] .fc a:hover{color:#F0EDE6}
 [data-theme="dark"] .fb2{color:rgba(220,210,195,.45);border-top-color:rgba(220,210,195,.12)}
 
+/* ══ ORDERS ADMIN PANEL ══ */
+#oap{display:none;position:fixed;inset:0;z-index:910;background:var(--bg);flex-direction:column;overflow:hidden}
+#oap.open{display:flex;animation:pgIn .3s both}
+.oat{background:var(--text);color:#FAF6EE;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.oat h2{font-size:1.15rem;font-style:italic;font-weight:300;color:var(--t3)}
+.oat-r{display:flex;gap:8px;align-items:center}
+.oap-body{flex:1;overflow-y:auto;padding:20px 18px}
+.oap-tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bg3);flex-shrink:0}
+.oap-tab{flex:1;padding:12px;font-size:.61rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);border-bottom:2px solid transparent;transition:all .2s}
+.oap-tab.on{color:var(--t);border-bottom-color:var(--t)}
+.oap-section{display:none}
+.oap-section.ton{display:block}
+.o-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.o-toolbar-title{font-size:.57rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--t)}
+.o-toolbar-btns{display:flex;gap:8px}
+.o-dl-btn{background:var(--text);color:var(--bg);padding:9px 16px;border-radius:100px;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:background .2s}
+.o-dl-btn:hover{background:var(--t)}
+.o-reset-btn{background:transparent;color:#c0392b;border:1.5px solid #c0392b;padding:9px 16px;border-radius:100px;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:all .2s}
+.o-reset-btn:hover{background:#c0392b;color:#fff}
+.o-table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--bg3)}
+.o-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.o-table th{background:var(--bg2);padding:11px 14px;text-align:left;font-size:.55rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);border-bottom:1px solid var(--bg3);white-space:nowrap}
+.o-table td{padding:11px 14px;border-bottom:1px solid var(--bg3);vertical-align:top;color:var(--text)}
+.o-table tr:last-child td{border-bottom:none}
+.o-table tr:hover td{background:var(--bg2)}
+.o-id{font-size:.6rem;font-weight:700;color:var(--t);font-family:monospace;letter-spacing:.05em}
+.o-badge{display:inline-block;padding:3px 9px;border-radius:100px;font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.o-badge.pickup{background:rgba(139,111,94,.15);color:var(--t)}
+.o-badge.delivery{background:rgba(52,152,219,.12);color:#2980b9}
+.o-empty{text-align:center;padding:44px 20px;color:var(--mu);font-size:.8rem}
+.o-items-list{font-size:.72rem;line-height:1.8}
+.o-items-list span{display:block}
+.stk-grid{display:flex;flex-direction:column;gap:10px}
+.stk-row2{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1.5px solid var(--bg3);border-radius:13px;padding:12px 15px;gap:12px}
+.stk-info{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
+.stk-thumb{width:40px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.stk-thumb-ph{width:40px;height:52px;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.stk-name{font-size:.82rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+.stk-cat{font-size:.62rem;color:var(--mu);margin-top:2px}
+.stk-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.stk-status{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.stk-status.in{color:#27ae60}
+.stk-status.out{color:#c0392b}
 /* ══ ADMIN GATE ══ */
 #ag{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:18px}
 #ag.open{display:flex;animation:pgIn .3s both}
@@ -806,6 +849,54 @@ footer::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;he
   </div>
 </footer>
 
+<!-- ORDERS ADMIN PANEL -->
+<div id="oap">
+  <div class="oat">
+    <h2>📋 FIITEYY — Orders Panel</h2>
+    <div class="oat-r">
+      <button class="ae" onclick="closeOrdersPanel()">Exit</button>
+    </div>
+  </div>
+  <div class="oap-tabs">
+    <button class="oap-tab on" onclick="swOTab('orders',this)">Orders</button>
+    <button class="oap-tab" onclick="swOTab('stock',this)">Stock Control</button>
+  </div>
+  <div class="oap-body">
+    <!-- ORDERS SECTION -->
+    <div class="oap-section ton" data-ot="orders">
+      <div class="o-toolbar">
+        <span class="o-toolbar-title">All Orders (<span id="o-cnt">0</span>)</span>
+        <div class="o-toolbar-btns">
+          <button class="o-dl-btn" onclick="downloadOrdersCSV()">⬇ Download Excel</button>
+          <button class="o-reset-btn" onclick="resetOrders()">🗑 Reset All</button>
+        </div>
+      </div>
+      <div class="o-table-wrap">
+        <table class="o-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date & Time</th>
+              <th>Type</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Customer</th>
+            </tr>
+          </thead>
+          <tbody id="o-tbody"><tr><td colspan="6" class="o-empty">Loading orders…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- STOCK SECTION -->
+    <div class="oap-section" data-ot="stock">
+      <div class="o-toolbar">
+        <span class="o-toolbar-title">Product Stock Control</span>
+      </div>
+      <div class="stk-grid" id="o-stk-grid"><p style="color:var(--mu);font-size:.8rem">Loading products…</p></div>
+    </div>
+  </div>
+</div>
+
 <!-- ADMIN GATE -->
 <div id="ag">
   <div class="gb">
@@ -981,6 +1072,7 @@ onSnapshot(q,snap=>{
   renderGrid(inv);
   renderNewArrivals(inv);
   if(document.getElementById('ap').classList.contains('open'))refreshList();
+  if(document.getElementById('oap').classList.contains('open'))renderStockControl();
 },err=>{
   console.error(err);
   document.getElementById('product-grid').innerHTML='<p class="lg-g">Could not load products ('+err.code+')</p>';
@@ -1390,9 +1482,22 @@ function openGate(){document.getElementById('g-inp').value='';document.getElemen
 function closeGate(){document.getElementById('ag').style.display='none';}
 function checkGate(){
   const v=document.getElementById('g-inp').value;
-  if(v===KEY){closeGate();document.getElementById('ap').classList.add('open');document.body.style.overflow='hidden';refreshList();updPv();
+  if(v===KEY){
+    closeGate();
+    document.getElementById('ap').classList.add('open');
+    document.body.style.overflow='hidden';
+    refreshList();updPv();
     if(window.innerWidth<=860){document.querySelectorAll('[data-t]').forEach((el,i)=>el.classList.toggle('ton',i===0));}
-  } else {document.getElementById('g-err').textContent='Incorrect key. Try again.';document.getElementById('g-inp').value='';document.getElementById('g-inp').focus();}
+  } else if(v===ORDERS_KEY){
+    closeGate();
+    document.getElementById('oap').classList.add('open');
+    document.body.style.overflow='hidden';
+    loadOrdersPanel();
+  } else {
+    document.getElementById('g-err').textContent='Incorrect key. Try again.';
+    document.getElementById('g-inp').value='';
+    document.getElementById('g-inp').focus();
+  }
 }
 function toggleEye(){const i=document.getElementById('g-inp');i.type=i.type==='password'?'text':'password';document.getElementById('eye-btn').textContent=i.type==='password'?'👁':'🙈';}
 window.closeAdmin=function(){document.getElementById('ap').classList.remove('open');document.body.style.overflow='';cancelEdit();};
@@ -1493,6 +1598,25 @@ window.checkout=function(){
     message+='   FIITEYY Clothing, Madina — Rawlings Circle, opposite S.D.A School';
   }
 
+  /* ── Save order to Firestore ── */
+  const orderId='FIIT-'+new Date().toISOString().slice(2,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
+  const orderData={
+    orderId,
+    orderType,
+    items: cart.map(item=>({name:item.name||'--',size:item.size||'--',cat:item.cat||'--',price:Number(item.price)||0,image:(item.images&&item.images[0])||''})),
+    total,
+    createdAt: new Date().toISOString()
+  };
+  if(orderType==='delivery'){
+    orderData.customerName=document.getElementById('cust-name').value.trim();
+    orderData.customerPhone=document.getElementById('cust-phone').value.trim();
+    orderData.customerLocation=document.getElementById('cust-location').value.trim();
+  }
+  addDoc(collection(db,'orders'),orderData).catch(e=>console.error('Order save failed:',e));
+
+  /* Append Order ID to WhatsApp message */
+  message+=`\n\n🆔 *Order ID: ${orderId}*`;
+
   const whatsappUrl=`https://wa.me/233202153570?text=${encodeURIComponent(message)}`;
   window.open(whatsappUrl,'_blank');
   localStorage.removeItem('cart');
@@ -1571,6 +1695,161 @@ window.rmImg = rmImg;
 window.setSzSystem = setSzSystem;
 window.toggleDeliveryForm = toggleDeliveryForm;
 window.sendContactMessage = sendContactMessage;
+
+/* ══ ORDERS ADMIN ══ */
+const ORDERS_KEY = 'Fiiteyy@2026';
+let ordersData = [];
+let ordersUnsubscribe = null;
+
+function closeOrdersPanel(){
+  document.getElementById('oap').classList.remove('open');
+  document.body.style.overflow='';
+  if(ordersUnsubscribe){ordersUnsubscribe();ordersUnsubscribe=null;}
+}
+function swOTab(t,btn){
+  document.querySelectorAll('.oap-tab').forEach(x=>x.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('[data-ot]').forEach(el=>el.classList.toggle('ton',el.dataset.ot===t));
+}
+
+function loadOrdersPanel(){
+  /* Live orders listener */
+  const oq=query(collection(db,'orders'),orderBy('createdAt','desc'));
+  if(ordersUnsubscribe) ordersUnsubscribe();
+  ordersUnsubscribe=onSnapshot(oq,snap=>{
+    ordersData=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderOrdersTable();
+  },err=>{
+    document.getElementById('o-tbody').innerHTML='<tr><td colspan="6" class="o-empty">Failed to load orders.</td></tr>';
+  });
+  /* Stock control */
+  renderStockControl();
+}
+
+function renderOrdersTable(){
+  const tbody=document.getElementById('o-tbody');
+  document.getElementById('o-cnt').textContent=ordersData.length;
+  if(!ordersData.length){
+    tbody.innerHTML='<tr><td colspan="6" class="o-empty">No orders yet. Orders will appear here after checkout.</td></tr>';
+    return;
+  }
+  tbody.innerHTML=ordersData.map(o=>{
+    const dt=o.createdAt?new Date(o.createdAt).toLocaleString('en-GH',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'--';
+    const itemsHtml=`<div class="o-items-list">${(o.items||[]).map(it=>`<span>• ${it.name} · ${it.size} · ${it.price>0?'GH₵ '+it.price.toLocaleString():'--'}</span>`).join('')}</div>`;
+    const cust=o.orderType==='delivery'
+      ?`<div class="o-items-list"><span>${o.customerName||'--'}</span><span>${o.customerPhone||'--'}</span><span>${o.customerLocation||'--'}</span></div>`
+      :'<span style="color:var(--mu);font-size:.7rem">Pickup</span>';
+    return `<tr>
+      <td><span class="o-id">${o.orderId||'--'}</span></td>
+      <td style="font-size:.72rem;white-space:nowrap">${dt}</td>
+      <td><span class="o-badge ${o.orderType||'pickup'}">${(o.orderType||'PICKUP').toUpperCase()}</span></td>
+      <td>${itemsHtml}</td>
+      <td style="font-weight:600;white-space:nowrap">${o.total>0?'GH₵ '+o.total.toLocaleString():'--'}</td>
+      <td>${cust}</td>
+    </tr>`;
+  }).join('');
+}
+
+function downloadOrdersCSV(){
+  if(!ordersData.length){alert('No orders to download.');return;}
+
+  /* Build HTML table — opens in Excel/Sheets and works on mobile */
+  const headers=['Order ID','Date & Time','Type','Items','Total (GH₵)','Customer Name','Phone','Location'];
+  const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="UTF-8">
+<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+<x:Name>Orders</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+</x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+<style>
+  th{background:#1A1A18;color:#FAF6EE;font-size:11px;padding:8px 12px;text-align:left;white-space:nowrap}
+  td{font-size:11px;padding:7px 12px;border-bottom:1px solid #E8E0D0;vertical-align:top}
+  tr:nth-child(even) td{background:#F5F0E8}
+</style>
+</head><body>
+<table border="0" cellpadding="0" cellspacing="0">
+<thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+
+  ordersData.forEach(o=>{
+    const dt=o.createdAt?new Date(o.createdAt).toLocaleString('en-GH',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+    const items=(o.items||[]).map(it=>`${esc(it.name)} (${esc(it.size)})${it.price>0?' - GH₵'+it.price:''}`).join('<br>');
+    html+=`<tr>
+      <td>${esc(o.orderId)}</td>
+      <td style="white-space:nowrap">${esc(dt)}</td>
+      <td>${esc((o.orderType||'').toUpperCase())}</td>
+      <td>${items}</td>
+      <td>${o.total>0?'GH₵ '+o.total.toLocaleString():''}</td>
+      <td>${esc(o.customerName)}</td>
+      <td>${esc(o.customerPhone)}</td>
+      <td>${esc(o.customerLocation)}</td>
+    </tr>`;
+  });
+  html+=`</tbody></table></body></html>`;
+
+  const filename='FIITEYY_Orders_'+new Date().toISOString().slice(0,10)+'.xls';
+  const blob=new Blob([html],{type:'application/vnd.ms-excel;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+
+  /* Mobile-safe download */
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=filename;
+  a.style.display='none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},300);
+}
+
+async function resetOrders(){
+  if(!ordersData.length){alert('No orders to reset.');return;}
+  if(!confirm(`Delete all ${ordersData.length} order(s)? This cannot be undone.`)) return;
+  try{
+    await Promise.all(ordersData.map(o=>deleteDoc(doc(db,'orders',o.id))));
+    ordersData=[];
+    renderOrdersTable();
+  }catch(e){alert('Error deleting orders. Try again.');}
+}
+
+function renderStockControl(){
+  const grid=document.getElementById('o-stk-grid');
+  if(!inv.length){grid.innerHTML='<p style="color:var(--mu);font-size:.8rem">No products found.</p>';return;}
+  grid.innerHTML=inv.map(item=>{
+    const img=item.images&&item.images[0]
+      ?`<img src="${item.images[0]}" class="stk-thumb" alt="${item.name||''}" onerror="this.style.display='none'">`
+      :`<div class="stk-thumb-ph">🧥</div>`;
+    const statusClass=item.inStock!==false?'in':'out';
+    const statusLabel=item.inStock!==false?'In Stock':'Out of Stock';
+    const checked=item.inStock!==false?'checked':'';
+    return `<div class="stk-row2">
+      <div class="stk-info">
+        ${img}
+        <div style="min-width:0">
+          <div class="stk-name">${item.name||'Untitled'}</div>
+          <div class="stk-cat">${item.cat||'—'} ${item.price?'· GH₵ '+item.price:''}</div>
+        </div>
+      </div>
+      <div class="stk-right">
+        <span class="stk-status ${statusClass}" id="stk-st-${item.fid}">${statusLabel}</span>
+        <label class="tsw">
+          <input type="checkbox" ${checked} onchange="toggleStock('${item.fid}')">
+          <div class="ttr"></div>
+          <div class="tth"></div>
+        </label>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* Re-render stock control when inv updates */
+const _origRefreshList=window.refreshList;
+window.refreshList=function(){if(typeof _origRefreshList==='function')_origRefreshList();};
+
+/* Expose to window */
+window.closeOrdersPanel=closeOrdersPanel;
+window.swOTab=swOTab;
+window.downloadOrdersCSV=downloadOrdersCSV;
+window.resetOrders=resetOrders;
 </script>
 </body>
 </html>
