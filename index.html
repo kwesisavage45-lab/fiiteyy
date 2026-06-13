@@ -811,7 +811,7 @@ footer::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;he
       <div class="ct-info">
         <div><p class="ci-l">Find Us</p><p class="ci-v">Madina — Rawlings Circle, opposite S.D.A School</p></div>
         <div><p class="ci-l">Phone</p><p class="ci-v">+233 20 215 3570</p></div>
-        <div><p class="ci-l">WhatsApp</p><a href="https://wa.me/233202153570" target="_blank" class="ci-v" style="display:block;text-decoration:none;color:inherit;">+233 02 0153 570</a></div>
+        <div><p class="ci-l">WhatsApp</p><a href="https://wa.me/233202153570" target="_blank" class="ci-v" style="display:block;text-decoration:none;color:inherit;">0202153570</a></div>
         <div><p class="ci-l">Snapchat</p><a href="https://snapchat.com/t/v8j3QnSx" target="_blank" class="ci-v" style="display:block;text-decoration:none;color:inherit;">@fiiteyy</a></div>
         <div><p class="ci-l">TikTok</p><a href="https://www.tiktok.com/@fiiteyy" target="_blank" class="ci-v" style="display:block;text-decoration:none;color:inherit;">@fiiteyy</a></div>
       </div>
@@ -845,7 +845,7 @@ footer::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;he
         </ul></div>
       </div>
     </div>
-    <div class="fb2">&copy; 2026 FIITEYY Clothing, Madina, Accra, Ghana | OG😎.!!</div>
+    <div class="fb2">&copy; 2026 FIITEYY Clothing, Madina, Accra, Ghana | OG😎 made this.!!</div>
   </div>
 </footer>
 
@@ -1058,11 +1058,13 @@ document.getElementById('tb2').addEventListener('click',toggleTheme);
 window.showPage=function(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});};
 window.toggleMob=function(){document.getElementById('mob-nav').classList.toggle('open');};
 
-/* ── DOUBLE-TAP LOGO → ADMIN ── */
-let tapT=null;
+/* ── TRIPLE-TAP LOGO → ADMIN ── */
+let tapT=null,tapN=0;
 document.getElementById('logo-btn').addEventListener('click',()=>{
-  if(tapT){clearTimeout(tapT);tapT=null;openGate();}
-  else{tapT=setTimeout(()=>{tapT=null;window.showPage('home');},310);}
+  tapN++;
+  if(tapT)clearTimeout(tapT);
+  if(tapN>=3){tapN=0;tapT=null;openGate();}
+  else{tapT=setTimeout(()=>{tapN=0;tapT=null;window.showPage('home');},400);}
 });
 
 /* ── FIRESTORE ── */
